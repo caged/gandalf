@@ -1,2 +1,7 @@
-/* Add JavaScript code here! */
-console.log('Hello World! You did it! Welcome to Snowpack :D');
+import Plugin from "./plugin/Plugin.svelte";
+
+const plugin = new Plugin({
+  target: document.body,
+});
+
+export default plugin;
