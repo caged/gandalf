@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+if [[ $(command -v mkcert) == "" ]]; then
+  echo "mkcert is required, but not installed..."
+  if [[ $(command -v brew) == "" ]]; then
+    echo "homebrew is requried to install mkcert, but not installed..."
+    echo "Please install homebrew and mkcert and try again. https://brew.sh"
+  fi
+  exit 1
+fi
+
+mkcert -install && \
+  mkcert -key-file snowpack.key -cert-file snowpack.crt localhost
