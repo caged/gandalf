@@ -1,4 +1,13 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
+
+// This is implicit if you have snowpack.key/crt files in
+// the root of your project.
+//
+//
+// const fs = require("fs");
+// const cert = readFileSync("snowpack.crt");
+// const key = readFileSync("snowpack.key");
+
 export default {
   mount: {
     /* ... */
@@ -18,6 +27,8 @@ export default {
     /* ... */
   },
   devOptions: {
+    port: 3000,
+    secure: true,
     /* ... */
   },
   buildOptions: {
