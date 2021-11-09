@@ -1,3 +1,5 @@
+DANGER ZONE: This is unstable audio software. Probably best to use it at low volumes until otherwise stated.
+
 VST with HTML, CSS, and JavaScript using [Elementary Audio](https://www.elementary.audio/).
 
 ![](ui.png)
