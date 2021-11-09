@@ -5,16 +5,18 @@
   } from "@nick-thompson/elementary";
   import RangeSlider from "./RangeSlider.svelte";
 
-  let lq = 0;
-  let lpf;
+  let lpf = 10000;
+  let hpf = 0;
 
-  let hq = 0;
-  let hpf;
-
-  // core.on("load", () => {
-  //   console.log("loaded");
-  //   core.render(el.highpass(100, 1, el.in()));
-  // });
+  function process(event) {
+    const hp = el.highpass(
+      el.sm(el.const({ key: "hpf", value: hpf })),
+      1,
+      el.in()
+    );
+    const lp = el.lowpass(el.sm(el.const({ key: "lpf", value: lpf })), 1, hp);
+    core.render(lp, lp);
+  }
 
   core.initialize();
 </script>
@@ -32,9 +34,10 @@
     <div class="slider">
       <RangeSlider
         min="0"
-        max="20000"
+        max="10000"
         bind:maxValue={lpf}
         bind:minValue={hpf}
+        on:change={process}
       />
     </div>
     <span class="label">
