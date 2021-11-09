@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   export let min = 0;
   export let max = 5000;
   export let step = 1;
@@ -6,9 +7,12 @@
   export let minValue = min;
   export let maxValue = max;
 
+  const dispatch = createEventDispatcher();
+
   $: {
     minValue = Math.min(minValue, maxValue);
     maxValue = Math.max(maxValue, minValue);
+    dispatch("change", { minValue, maxValue });
   }
 </script>
 
