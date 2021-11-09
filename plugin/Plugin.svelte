@@ -3,12 +3,13 @@
     ElementaryPluginRenderer as core,
     el,
   } from "@nick-thompson/elementary";
+  import RangeSlider from "./RangeSlider.svelte";
 
   let lq = 0;
-  let lf = 100;
+  let lpf;
 
   let hq = 0;
-  let hf = 100;
+  let hpf;
 
   // core.on("load", () => {
   //   console.log("loaded");
@@ -19,22 +20,27 @@
 </script>
 
 <div class="plugin">
-  <h1>Gandalf</h1>
-  <div class="filters">
-    <div class="filter">
-      <h2>Low pass filter</h2>
-      <div class="slider">
-        <label for="lf">Low frequency <span class="val">{lf}</span></label>
-        <input type="range" min="500" max="15000" step="1" bind:value={lf} />
-      </div>
+  <h1>
+    Gandalf
+    <span class="subtitle">You shall not pass at specific frequencies</span>
+  </h1>
+  <div class="filter">
+    <span class="label">
+      <span class="prop">High pass</span>
+      <span class="val">{hpf}hz</span>
+    </span>
+    <div class="slider">
+      <RangeSlider
+        min="0"
+        max="20000"
+        bind:maxValue={lpf}
+        bind:minValue={hpf}
+      />
     </div>
-    <div class="filter">
-      <h2>High pass filter</h2>
-      <div class="slider">
-        <label for="lf">Low frequency <span class="val">{lf}</span></label>
-        <input type="range" min="500" max="15000" step="1" bind:value={lf} />
-      </div>
-    </div>
+    <span class="label">
+      <span class="prop">Low pass</span>
+      <span class="val">{lpf}hz</span>
+    </span>
   </div>
 </div>
 
@@ -47,84 +53,58 @@
     font-size: 14px;
     color: #f7f7f7;
   }
-  :root {
-    --range-height: 8px;
-  }
-
   .plugin {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
     width: 100vw;
     height: 100vh;
     background-color: #212121;
   }
 
+  .plugin > * {
+    flex: 1 100%;
+  }
   h1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin: 0;
     padding: 10px 20px;
     border-bottom: 1px solid #333;
     font-size: 1.5em;
   }
 
-  h2 {
-    margin: 0 0 20px 0;
-    padding: 0;
-    font-size: 1rem;
-    color: #fff;
-  }
-
-  label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-    margin: 0 0 5px 0;
-  }
-
-  input[type="range"] {
-    appearance: none;
-    -webkit-appearance: none;
-    height: var(--range-height);
-    border-radius: var(--range-height);
-    background-color: #333;
-    background-image: linear-gradient(
-      hsla(0, 0%, 30%, 0.2),
-      hsla(0, 0%, 45%, 0.2)
-    );
-    box-shadow: 1px 1px 0 0 hsla(0, 0%, 30%, 1);
-    width: 100%;
-  }
-
-  input[type="range"]::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    border: 0;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    background: hsl(100, 50%, 50%);
-    width: calc(var(--range-height) * 2);
-    height: calc(var(--range-height) * 2);
-    border-radius: 50%;
-    cursor: ew-resize;
-  }
-
-  .filters {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  .subtitle {
+    font-size: 0.7em;
+    font-weight: normal;
+    color: #777;
+    font-style: italic;
   }
 
   .filter {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    padding: 10px 20px;
+    background: #333;
+    border-radius: 40px;
+    margin: 100px;
+  }
+
+  .slider {
+    flex: 1;
     padding: 20px;
-    border-radius: 6px;
-    background-color: #111;
-    color: #888;
+  }
+
+  .prop {
+    display: block;
+    font-weight: bold;
   }
 
   .val {
     font-family: monospace;
-    font-size: 0.9em;
-    color: hsl(100, 50%, 50%);
+    font-size: 0.8em;
+    color: hsl(300, 80%, 70%);
   }
 </style>
